@@ -1,8 +1,10 @@
-var mongoose = require("mongoose");
-const Joi = require("@hapi/joi");
-var bcrypt = require("bcryptjs"); //for password encryption
-
-var userSchema = mongoose.Schema({
+// var mongoose = require("mongoose");
+// const Joi = require("@hapi/joi");
+// var bcrypt = require("bcryptjs"); //for password encryption
+import mongoose from "mongoose";
+import Joi from "@hapi/joi";
+import bcrypt from "bcryptjs";
+const userSchema = mongoose.Schema({
   name: String,
   email: {
     type: String,
@@ -22,7 +24,7 @@ var userSchema = mongoose.Schema({
 //   this.password = await bcrypt.hash(this.password, salt);
 // };
 
-var User = mongoose.model("User", userSchema);
+// var User = mongoose.model("User", userSchema);
 
 //validating Users
 function validateUserSignUp(data) {
@@ -42,6 +44,7 @@ function validateUserLogin(data) {
   return schema.validate(data, { abortEarly: false });
 }
 
-module.exports.User = User;
+// module.exports.User = User;
 // module.exports.validateUserSignUp = validateUserSignUp; //for SignUp
 // module.exports.validateUserLogin = validateUserLogin;
+export const User = mongoose.model("User", userSchema);

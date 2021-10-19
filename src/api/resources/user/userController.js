@@ -1,4 +1,4 @@
-var { generateControllers } = require("../../modules/query");
-var { User } = require("./userModel");
-generateControllers = generateControllers(User);
-module.exports = generateControllers;
+import { generateControllers } from "../../modules/query.js";
+import { User } from "./userModel.js";
+
+export default generateControllers(User);

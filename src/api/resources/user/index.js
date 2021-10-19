@@ -1,1 +1,1 @@
-var router = require("./userRouter");
+export * from "./userRouter";
