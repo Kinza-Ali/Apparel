@@ -15,5 +15,5 @@ productRouter
 productRouter
   .route("/:id")
   .get(productController.getOne)
-  .put(productController.updateOne)
-  .delete(productController.deleteOne);
+  .put(auth, admin, productController.updateOne)
+  .delete(auth, admin, productController.deleteOne);

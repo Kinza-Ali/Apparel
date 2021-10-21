@@ -7,11 +7,11 @@ export const orderRouter = express.Router();
 
 orderRouter
   .route("/")
-  .get(orderController.getAll)
-  .post(orderController.createOne);
+  .get(auth, admin, orderController.getAll)
+  .post(auth, admin, orderController.createOne);
 
 orderRouter
   .route("/:id")
-  .get(orderController.getOne)
-  .put(orderController.updateOne)
-  .delete(orderController.deleteOne);
+  .get(auth, admin, orderController.getOne)
+  .put(oauth, admin, rderController.updateOne)
+  .delete(auth, admin, orderController.deleteOne);

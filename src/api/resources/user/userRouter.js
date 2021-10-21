@@ -9,6 +9,7 @@ export const userRouter = express.Router();
 
 userRouter.route("/").get(userController.getAll);
 // .post(userController.createOne);
+
 userRouter.post("/register", async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
