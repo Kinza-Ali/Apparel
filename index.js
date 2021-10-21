@@ -7,7 +7,9 @@ import router from "./src/api/router.js";
 
 import mongoose from "mongoose";
 import config from "config";
+import dotenv from "dotenv";
 
+dotenv.config();
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));

@@ -16,21 +16,21 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true },
   dateOfBirth: {
     type: Number,
-    required: "Kindly enter your date of birth",
+    // required: "Kindly enter your date of birth",
   },
   contact: {
     type: Number,
-    required: "Kindly enter your contact",
+    // required: "Kindly enter your contact",
   },
   role: {
     type: String,
     default: "user",
   },
 });
-// userSchema.methods.generateHashedPassword = async function () {
-//   let salt = await bcrypt.genSalt(10);
-//   this.password = await bcrypt.hash(this.password, salt);
-// };
+userSchema.methods.generateHashedPassword = async function () {
+  let salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+};
 
 // var User = mongoose.model("User", userSchema);
 
