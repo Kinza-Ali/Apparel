@@ -69,7 +69,7 @@ export const deleteOne = (model) => (req, res, next) => {
     },
     function (err, model) {
       if (err) res.send(err);
-      res.json({ message: "product successfully deleted" });
+      res.json({ message: " successfully deleted" });
     }
   );
 };

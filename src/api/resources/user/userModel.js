@@ -14,6 +14,14 @@ const userSchema = mongoose.Schema({
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
   },
   password: { type: String, required: true },
+  dateOfBirth: {
+    type: Number,
+    required: "Kindly enter your date of birth",
+  },
+  contact: {
+    type: Number,
+    required: "Kindly enter your contact",
+  },
   role: {
     type: String,
     default: "user",

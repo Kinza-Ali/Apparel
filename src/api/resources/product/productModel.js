@@ -3,16 +3,20 @@ import Joi from "@hapi/joi";
 const productSchema = mongoose.Schema({
   productName: {
     type: String,
-    required: "Kindly enter the name of the task",
+    required: "Kindly enter the product name",
   },
-  productCode: {
+  productId: {
     type: String,
-    required: "Kindly enter the name of the task",
+    required: "Kindly enter the product id",
   },
   image: String,
   productType: {
     type: String,
-    required: "Kindly enter the name of the task",
+    required: "Kindly enter the product type",
+  },
+  price: {
+    type: Number,
+    required: "Kindly enter the price",
   },
 });
 
