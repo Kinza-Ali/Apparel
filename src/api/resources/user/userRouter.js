@@ -3,8 +3,6 @@ import userController from "./userController.js";
 
 export const userRouter = express.Router();
 
-userRouter.param("id", userController.findByParam);
-
 userRouter.route("/").get(userController.getAll).post(userController.createOne);
 
 userRouter
