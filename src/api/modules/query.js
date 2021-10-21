@@ -6,8 +6,12 @@ export const controllers = {
   },
 
   updateOne(docToUpdate, update) {
-    merge(docToUpdate, update);
-    return docToUpdate.save();
+    try {
+      merge(docToUpdate, update);
+      return docToUpdate.save();
+    } catch (err) {
+      console.log(err + "eror");
+    }
   },
 
   deleteOne(docToDelete) {
@@ -35,20 +39,39 @@ export const createOne = (model) => (req, res, next) => {
 };
 
 export const updateOne = (model) => async (req, res, next) => {
-  const docToUpdate = req.docFromId;
-  const update = req.body;
+  // const docToUpdate = req.docFromId;
+  // const update = req.body;
 
-  return controllers
-    .updateOne(docToUpdate, update)
-    .then((doc) => res.status(201).json(doc))
-    .catch((error) => next(error));
+  // return controllers
+  //   .updateOne(docToUpdate, update)
+  //   .then((doc) => res.status(201).json(doc))
+  //   .catch((error) => next(error));
+
+  model.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    { new: true },
+    function (err, model) {
+      if (err) res.send(err);
+      res.json(model);
+    }
+  );
 };
 
 export const deleteOne = (model) => (req, res, next) => {
-  return controllers
-    .deleteOne(req.docFromId)
-    .then((doc) => res.status(201).json(doc))
-    .catch((error) => next(error));
+  // return controllers
+  //   .deleteOne(req.docFromId)
+  //   .then((doc) => res.status(201).json(doc))
+  //   .catch((error) => next(error));
+  model.remove(
+    {
+      _id: req.params.id,
+    },
+    function (err, model) {
+      if (err) res.send(err);
+      res.json({ message: "product successfully deleted" });
+    }
+  );
 };
 
 export const getOne = (model) => (req, res, next) => {
