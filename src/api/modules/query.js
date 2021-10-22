@@ -5,14 +5,14 @@ export const controllers = {
     return model.create(body);
   },
 
-  updateOne(docToUpdate, update) {
-    try {
-      merge(docToUpdate, update);
-      return docToUpdate.save();
-    } catch (err) {
-      console.log(err + "eror");
-    }
-  },
+  // updateOne(docToUpdate, update) {
+  //   try {
+  //     merge(docToUpdate, update);
+  //     return docToUpdate.save();
+  //   } catch (err) {
+  //     console.log(err + "eror");
+  //   }
+  // },
 
   deleteOne(docToDelete) {
     return docToDelete.remove();
@@ -22,9 +22,9 @@ export const controllers = {
     return Promise.resolve(docToGet);
   },
 
-  getAll(model) {
-    return model.find({});
-  },
+  // getAll(model) {
+  //   return model.find({});
+  // },
 
   findByParam(model, id) {
     return model.findById(id);
@@ -54,16 +54,11 @@ export const updateOne = (model) => async (req, res, next) => {
     function (err, doc) {
       if (err) res.send(err);
       res.json(doc);
-      console.log(doc);
     }
   );
 };
 
 export const deleteOne = (model) => (req, res, next) => {
-  // return controllers
-  //   .deleteOne(req.docFromId)
-  //   .then((doc) => res.status(201).json(doc))
-  //   .catch((error) => next(error));
   model.remove(
     {
       _id: req.params.id,
@@ -82,11 +77,12 @@ export const getOne = (model) => (req, res, next) => {
   });
 };
 
-export const getAll = (model) => (req, res, next) => {
-  return controllers
-    .getAll(model)
-    .then((docs) => res.json(docs))
-    .catch((error) => next(error));
+export const getAll = (model) => async (req, res, next) => {
+  let page = Number(req.query.page ? req.query.page : 1);
+  let perPage = Number(req.query.perPage ? req.query.perPage : 10);
+  let skipRecords = perPage * (page - 1);
+  let docs = await model.find({}).skip(skipRecords).limit(perPage);
+  return res.send(docs);
 };
 
 export const findByParam = (model) => (req, res, next, id) => {
