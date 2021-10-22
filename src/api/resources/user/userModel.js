@@ -23,8 +23,8 @@ const userSchema = mongoose.Schema({
     // required: "Kindly enter your contact",
   },
   role: {
-    type: String,
-    default: "user",
+    type: Number,
+    default: 2,
   },
 });
 userSchema.methods.generateHashedPassword = async function () {
