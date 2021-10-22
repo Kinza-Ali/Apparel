@@ -3,6 +3,7 @@ import orderController from "./orderController.js";
 import { auth } from "../../modules/auth.js";
 import { admin } from "../../modules/admin.js";
 import { validateOrder } from "../../modules/middlewares/validateOrder.js";
+import { Order } from "./orderModel.js";
 
 export const orderRouter = express.Router();
 
@@ -12,6 +13,14 @@ orderRouter
   .route("/")
   .get(auth, admin, orderController.getAll)
   .post(auth, admin, validateOrder, orderController.createOne);
+
+// orderRouter.post("/", async (req, res) => {
+//   var newOrder = new Order(req.body);
+//   newOrder.save(function (err, newOrder) {
+//     if (err) res.send(err);
+//     res.json(newOrder);
+//   });
+// });
 
 orderRouter
   .route("/:id")
