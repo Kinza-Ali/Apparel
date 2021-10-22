@@ -1,4 +1,4 @@
 import { generateControllers } from "../../modules/query.js";
-import { Product } from "./productModel.js";
+import { Product, validateProduct } from "./productModel.js";
 
-export default generateControllers(Product);
+export default generateControllers(Product, validateProduct);

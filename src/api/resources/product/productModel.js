@@ -1,23 +1,21 @@
 import mongoose from "mongoose";
 import Joi from "@hapi/joi";
 const productSchema = mongoose.Schema({
-  productName: {
-    type: String,
-    required: "Kindly enter the product name",
-  },
-  productId: {
-    type: String,
-    required: "Kindly enter the product id",
-  },
+  productName: String,
+  productId: String,
   image: String,
-  productType: {
-    type: String,
-    required: "Kindly enter the product type",
-  },
-  price: {
-    type: Number,
-    required: "Kindly enter the price",
-  },
+  productType: Number,
+  price: Number,
 });
+// Validating Products
+export function validateProduct(data) {
+  const schema = Joi.object({
+    productName: Joi.string().min(3).max(20).required(),
+    productId: Joi.string().min(5).required(),
+    productType: Joi.number().required(),
+    price: Joi.number().required(),
+  });
+  return schema.validate(data, { abortEarly: true });
+}
 
 export const Product = mongoose.model("Product", productSchema);

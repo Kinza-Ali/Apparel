@@ -1,6 +1,6 @@
 import express from "express";
 import userController from "./userController.js";
-import { User } from "./userModel.js";
+import { User, validateUserLogin, validateUserSignUp } from "./userModel.js";
 import _ from "lodash";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -14,6 +14,8 @@ userRouter.post("/register", async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).send("user already exists");
+    let { error } = validateUserSignUp(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
     user = new User();
     user.name = req.body.name;
     user.email = req.body.email;
@@ -32,6 +34,8 @@ userRouter.post("/register", async (req, res) => {
 userRouter.post("/login", async (req, res) => {
   //check for existing email
   try {
+    let { error } = validateUserLogin(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
     let user = await User.findOne({ email: req.body.email });
     console.log(user);
     if (!user) return res.status(400).send("Email doesn't exist");

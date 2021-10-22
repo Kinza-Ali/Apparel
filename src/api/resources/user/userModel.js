@@ -14,14 +14,7 @@ const userSchema = mongoose.Schema({
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
   },
   password: { type: String, required: true },
-  dateOfBirth: {
-    type: Number,
-    // required: "Kindly enter your date of birth",
-  },
-  contact: {
-    type: Number,
-    // required: "Kindly enter your contact",
-  },
+  contact: String,
   role: {
     type: Number,
     default: 2,
@@ -35,16 +28,18 @@ userSchema.methods.generateHashedPassword = async function () {
 // var User = mongoose.model("User", userSchema);
 
 //validating Users
-function validateUserSignUp(data) {
+export function validateUserSignUp(data) {
   const schema = Joi.object({
     name: Joi.string().min(3).max(20).required(),
     email: Joi.string().email().min(10).required(),
     password: Joi.string().min(5).required(),
+    contact: Joi.string().length(14).regex(/^\d+$/),
+    role: Joi.number().required(),
   });
   return schema.validate(data, { abortEarly: false });
 }
 
-function validateUserLogin(data) {
+export function validateUserLogin(data) {
   const schema = Joi.object({
     email: Joi.string().email().min(10).required(),
     password: Joi.string().min(5).required(),
