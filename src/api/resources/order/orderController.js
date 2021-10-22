@@ -1,4 +1,4 @@
 import { generateControllers } from "../../modules/query.js";
-import { Order, validateOrder } from "./orderModel.js";
+import { Order } from "./orderModel.js";
 
-export default generateControllers(Order, validateOrder);
+export default generateControllers(Order);

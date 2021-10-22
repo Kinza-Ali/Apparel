@@ -31,9 +31,7 @@ export const controllers = {
   },
 };
 
-export const createOne = (model, validate) => (req, res, next) => {
-  let { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+export const createOne = (model) => (req, res, next) => {
   return controllers
     .createOne(model, req.body)
     .then((doc) => res.status(201).json(doc))
@@ -107,14 +105,14 @@ export const findByParam = (model) => (req, res, next, id) => {
     });
 };
 
-export const generateControllers = (model, validate, overrides = {}) => {
+export const generateControllers = (model, overrides = {}) => {
   const defaults = {
     findByParam: findByParam(model),
     getAll: getAll(model),
     getOne: getOne(model),
     deleteOne: deleteOne(model),
     updateOne: updateOne(model),
-    createOne: createOne(model, validate),
+    createOne: createOne(model),
   };
 
   return { ...defaults, ...overrides };

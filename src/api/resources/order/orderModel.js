@@ -13,7 +13,7 @@ const orderSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
-export function validateOrder(data) {
+export function validate_Order(data) {
   const schema = Joi.object({
     item: Joi.array().items(Joi.number()).required(),
     orderId: Joi.number().min(5).required(),

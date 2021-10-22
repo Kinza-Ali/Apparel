@@ -8,7 +8,7 @@ const productSchema = mongoose.Schema({
   price: Number,
 });
 // Validating Products
-export function validateProduct(data) {
+export function validateProd(data) {
   const schema = Joi.object({
     productName: Joi.string().min(3).max(20).required(),
     productId: Joi.string().min(5).required(),
