@@ -51,9 +51,10 @@ export const updateOne = (model) => async (req, res, next) => {
     { _id: req.params.id },
     req.body,
     { new: true },
-    function (err, model) {
+    function (err, doc) {
       if (err) res.send(err);
-      res.json(model);
+      res.json(doc);
+      console.log(doc);
     }
   );
 };
@@ -67,7 +68,7 @@ export const deleteOne = (model) => (req, res, next) => {
     {
       _id: req.params.id,
     },
-    function (err, model) {
+    function (err, doc) {
       if (err) res.send(err);
       res.json({ message: " successfully deleted" });
     }
@@ -75,10 +76,10 @@ export const deleteOne = (model) => (req, res, next) => {
 };
 
 export const getOne = (model) => (req, res, next) => {
-  return controllers
-    .getOne(req.docToUpdate)
-    .then((doc) => res.status(200).json(doc))
-    .catch((error) => next(error));
+  model.findById(req.params.id, function (err, doc) {
+    if (err) res.send(err);
+    res.json(doc);
+  });
 };
 
 export const getAll = (model) => (req, res, next) => {
