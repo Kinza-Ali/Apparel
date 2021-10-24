@@ -1,10 +1,5 @@
-// var server = require("./src/server");
-// server.start();
-// import app from "./src/server";
-
 import express from "express";
 import router from "./src/api/router.js";
-
 import mongoose from "mongoose";
 import config from "config";
 import dotenv from "dotenv";

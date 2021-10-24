@@ -1,4 +1,7 @@
+import { apiErrorResponse } from "./apiResponses.js";
+
 export const apiErrorHandler = (error, req, res, next) => {
   console.error(error.stack);
-  res.status(500).send(error.message || error.toString());
+  errMsg = error.message || error.toString();
+  res.send(apiErrorResponse(res, errMsg));
 };

@@ -1,6 +1,3 @@
-// var mongoose = require("mongoose");
-// const Joi = require("@hapi/joi");
-// var bcrypt = require("bcryptjs"); //for password encryption
 import mongoose from "mongoose";
 import Joi from "@hapi/joi";
 import bcrypt from "bcryptjs";
@@ -25,8 +22,6 @@ userSchema.methods.generateHashedPassword = async function () {
   this.password = await bcrypt.hash(this.password, salt);
 };
 
-// var User = mongoose.model("User", userSchema);
-
 //validating Users
 export function validateUserSignUp(data) {
   const schema = Joi.object({
@@ -46,6 +41,7 @@ export function validateUserLoginSchema(data) {
   });
   return schema.validate(data, { abortEarly: false });
 }
+
 export function validateUserUpdateSchema(data) {
   const schema = Joi.object({
     name: Joi.string().min(3).max(20),
