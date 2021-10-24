@@ -40,9 +40,11 @@ userRouter.post("/login", async (req, res) => {
     console.log(user);
     if (!user) return res.status(400).send("Email doesn't exist");
     let isValid = await bcrypt.compare(req.body.password, user.password);
-    console.log(process.env.JWT_SECRET);
     if (!isValid) return res.status(401).send("Invalid Password"); //password: 1234
-    let token = jwt.sign({ _id: user._id, name: user.name }, "test");
+    let token = jwt.sign(
+      { _id: user._id, name: user.name },
+      process.env.JWT_SECRET
+    );
     res.send(token);
   } catch (error) {
     console.log(error.message);
