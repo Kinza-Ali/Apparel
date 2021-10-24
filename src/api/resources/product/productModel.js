@@ -6,6 +6,7 @@ const productSchema = mongoose.Schema({
   image: String,
   productType: Number,
   price: Number,
+  quantity: Number,
 });
 // Validating Products
 export function validateProd(data) {
@@ -14,6 +15,7 @@ export function validateProd(data) {
     productId: Joi.string().min(5).required(),
     productType: Joi.number().required(),
     price: Joi.number().required(),
+    quantity: Joi.number().required(),
   });
   return schema.validate(data, { abortEarly: true });
 }

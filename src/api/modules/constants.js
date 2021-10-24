@@ -1,8 +1,6 @@
-// for role :
-// 1 = admin and 2 = user
-
-// for productType :
-//     1 = clothes
-//     2 = jewellery
-//     3 = Shoes
-//     4 = bags
+export const Admin = 1;
+export const User = 2;
+export const Clothes = 1;
+export const Bags = 2;
+export const Shoes = 3;
+export const Jewellery = 4;
