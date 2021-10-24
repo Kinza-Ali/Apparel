@@ -2,7 +2,10 @@ import express from "express";
 import productController from "./productController.js";
 import { auth } from "../../modules/auth.js";
 import { admin } from "../../modules/admin.js";
-import { validateProduct } from "../../modules/middlewares/validateProduct.js";
+import {
+  validateProduct,
+  validateProductUpdate,
+} from "../../modules/middlewares/validateProduct.js";
 
 export const productRouter = express.Router();
 
@@ -16,5 +19,5 @@ productRouter
 productRouter
   .route("/:id")
   .get(productController.getOne)
-  .put(auth, admin, productController.updateOne)
+  .put(auth, admin, validateProductUpdate, productController.updateOne)
   .delete(auth, admin, productController.deleteOne);
