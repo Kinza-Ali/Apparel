@@ -12,7 +12,6 @@ const orderSchema = mongoose.Schema(
       type: Number,
       required: "Kindly enter the price",
     },
-    //add user id
   },
   { timestamps: true }
 );
