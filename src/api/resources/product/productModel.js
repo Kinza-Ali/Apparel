@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import Joi from "@hapi/joi";
 const productSchema = mongoose.Schema({
   productName: String,
-  productId: String,
   image: String,
   productType: Number,
   price: Number,
@@ -12,7 +11,6 @@ const productSchema = mongoose.Schema({
 export function validateProd(data) {
   const schema = Joi.object({
     productName: Joi.string().min(3).max(20).required(),
-    productId: Joi.string().min(5).required(),
     productType: Joi.number().max(1).required(),
     price: Joi.number().min(50).required(),
     quantity: Joi.number().required(),
@@ -25,7 +23,6 @@ export function validateProd(data) {
 export function validateProdUpdate(data) {
   const schema = Joi.object({
     productName: Joi.string().min(3).max(20),
-    productId: Joi.string().min(5),
     productType: Joi.number().max(1),
     price: Joi.number().min(50),
     quantity: Joi.number(),
