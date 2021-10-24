@@ -5,15 +5,6 @@ export const controllers = {
     return model.create(body);
   },
 
-  // updateOne(docToUpdate, update) {
-  //   try {
-  //     merge(docToUpdate, update);
-  //     return docToUpdate.save();
-  //   } catch (err) {
-  //     console.log(err + "eror");
-  //   }
-  // },
-
   deleteOne(docToDelete) {
     return docToDelete.remove();
   },
@@ -21,10 +12,6 @@ export const controllers = {
   getOne(docToGet) {
     return Promise.resolve(docToGet);
   },
-
-  // getAll(model) {
-  //   return model.find({});
-  // },
 
   findByParam(model, id) {
     return model.findById(id);
@@ -39,14 +26,6 @@ export const createOne = (model) => (req, res, next) => {
 };
 
 export const updateOne = (model) => async (req, res, next) => {
-  // const docToUpdate = req.docFromId;
-  // const update = req.body;
-
-  // return controllers
-  //   .updateOne(docToUpdate, update)
-  //   .then((doc) => res.status(201).json(doc))
-  //   .catch((error) => next(error));
-
   model.findOneAndUpdate(
     { _id: req.params.id },
     req.body,
