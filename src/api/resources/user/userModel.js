@@ -39,15 +39,19 @@ export function validateUserSignUp(data) {
   return schema.validate(data, { abortEarly: false });
 }
 
-export function validateUserLogin(data) {
+export function validateUserLoginSchema(data) {
   const schema = Joi.object({
     email: Joi.string().email().min(10).required(),
     password: Joi.string().min(5).required(),
   });
   return schema.validate(data, { abortEarly: false });
 }
-
-// module.exports.User = User;
-// module.exports.validateUserSignUp = validateUserSignUp; //for SignUp
-// module.exports.validateUserLogin = validateUserLogin;
+export function validateUserUpdateSchema(data) {
+  const schema = Joi.object({
+    name: Joi.string().min(3).max(20),
+    password: Joi.string().min(5),
+    contact: Joi.string().length(14).regex(/^\d+$/),
+  });
+  return schema.validate(data, { abortEarly: false });
+}
 export const User = mongoose.model("User", userSchema);
