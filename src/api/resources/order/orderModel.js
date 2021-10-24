@@ -2,9 +2,12 @@ import mongoose from "mongoose";
 import Joi from "@hapi/joi";
 const orderSchema = mongoose.Schema(
   {
-    orderId: Number,
-
-    item: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    item: [
+      {
+        productId: String,
+        quantity: Number,
+      },
+    ],
     price: {
       type: Number,
       required: "Kindly enter the price",
@@ -15,7 +18,7 @@ const orderSchema = mongoose.Schema(
 );
 export function validate_Order(data) {
   const schema = Joi.object({
-    item: Joi.array().items(Joi.string()).required(),
+    item: Joi.array().required(),
     orderId: Joi.number().min(5).required(),
     price: Joi.number().required(),
   });
