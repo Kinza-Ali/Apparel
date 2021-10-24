@@ -16,11 +16,18 @@ const orderSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
-export function validate_Order(data) {
+export function validateOrderSchema(data) {
   const schema = Joi.object({
     item: Joi.array().required(),
-    orderId: Joi.number().min(5).required(),
     price: Joi.number().required(),
+  });
+  return schema.validate(data, { abortEarly: true });
+}
+
+export function validateOrderUpdateSchema(data) {
+  const schema = Joi.object({
+    item: Joi.array(),
+    price: Joi.number(),
   });
   return schema.validate(data, { abortEarly: true });
 }

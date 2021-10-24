@@ -2,18 +2,19 @@ import express from "express";
 import orderController from "./orderController.js";
 import { auth } from "../../modules/auth.js";
 import { admin } from "../../modules/admin.js";
-import { validateOrder } from "../../modules/middlewares/validateOrder.js";
+import {
+  validateOrder,
+  validateOrderUpdate,
+} from "../../modules/middlewares/validateOrder.js";
 import { Order } from "./orderModel.js";
 import { Product } from "../product/productModel.js";
 
 export const orderRouter = express.Router();
 
-// orderRouter.param("id", orderController.findByParam);
-
 orderRouter.route("/").get(auth, admin, orderController.getAll);
 // .post(auth, admin, validateOrder, orderController.createOne);
 
-orderRouter.post("/", async (req, res) => {
+orderRouter.post("/", auth, admin, validateOrder, async (req, res) => {
   try {
     var item = req.body.item;
     let product = [];
@@ -31,22 +32,17 @@ orderRouter.post("/", async (req, res) => {
           { new: true }
         );
       }
+      Order.create(req.body)
+        .then((doc) => res.status(201).json(doc))
+        .catch((error) => next(error));
     }
-
-    // res.json(product);
   } catch (error) {
     console.log(error);
   }
-
-  var newOrder = new Order(req.body);
-  newOrder.save(function (err, newOrder) {
-    if (err) res.send(err);
-    res.json(newOrder);
-  });
 });
 
 orderRouter
   .route("/:id")
   .get(auth, admin, orderController.getOne)
-  .put(auth, admin, validateOrder, orderController.updateOne)
+  .put(auth, admin, validateOrderUpdate, orderController.updateOne)
   .delete(auth, admin, orderController.deleteOne);
