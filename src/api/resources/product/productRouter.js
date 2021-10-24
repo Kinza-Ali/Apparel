@@ -9,8 +9,6 @@ import {
 
 export const productRouter = express.Router();
 
-productRouter.param("id", productController.findByParam);
-
 productRouter
   .route("/")
   .get(productController.getAll)
