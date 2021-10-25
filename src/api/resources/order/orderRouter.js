@@ -11,6 +11,7 @@ import { Product } from "../product/productModel.js";
 import {
   errorResponse,
   successResponsePost,
+  notFoundResponse,
 } from "../../modules/apiResponses.js";
 
 export const orderRouter = express.Router();
@@ -20,23 +21,31 @@ orderRouter.route("/").get(auth, admin, orderController.getAll);
 orderRouter.post("/", auth, admin, validateOrder, async (req, res) => {
   try {
     var item = req.body.item;
-
+    let totalPrice = 0;
     for (let keys in item) {
-      let temp = await Product.findOne({ _id: item[keys].productId });
-      if (item[keys].quantity > temp.quantity) {
+      let product = await Product.findOne({ _id: item[keys].productId });
+      let price = product.price * item[keys].quantity;
+      totalPrice = totalPrice + price;
+
+      if (item[keys].quantity > product.quantity) {
         res.send(errorResponse(res));
       } else {
-        let updatedQuantity = temp.quantity - item[keys].quantity;
+        let updatedQuantity = product.quantity - item[keys].quantity;
         await Product.findOneAndUpdate(
-          { _id: temp._id },
+          { _id: product._id },
           { quantity: updatedQuantity },
           { new: true }
         );
       }
-      Order.create(req.body)
-        .then((doc) => res.status(200).send(successResponsePost(doc, "post")))
-        .catch((error) => res.send(error));
     }
+    Order.create(req.body);
+    var order = new Order();
+    order.item = req.body.item;
+    order.price = totalPrice;
+    order.save(function (err, doc) {
+      if (err) res.status(404).send(notFoundResponse());
+      res.status(200).send(successResponsePost(doc, "post"));
+    });
   } catch (error) {
     console.log(error);
   }
