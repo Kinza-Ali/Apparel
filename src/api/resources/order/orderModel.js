@@ -10,23 +10,22 @@ const orderSchema = mongoose.Schema(
     ],
     price: {
       type: Number,
-      required: "Kindly enter the price",
     },
+    deliveryDate: Date,
   },
   { timestamps: true }
 );
 export function validateOrderSchema(data) {
   const schema = Joi.object({
     item: Joi.array().required(),
-    price: Joi.number().required(),
+    deliveryDate: Joi.date().required(),
   });
   return schema.validate(data, { abortEarly: true });
 }
 
 export function validateOrderUpdateSchema(data) {
   const schema = Joi.object({
-    item: Joi.array(),
-    price: Joi.number(),
+    deliveryDate: Joi.date(),
   });
   return schema.validate(data, { abortEarly: true });
 }
