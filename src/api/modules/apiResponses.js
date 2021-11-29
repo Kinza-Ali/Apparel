@@ -18,6 +18,7 @@ import {
   ForbiddenErrorMsg,
   forbiddenCode,
   InvalidTokenErrorMsg,
+  ValidProdId,
 } from "./constants.js";
 
 export const successResponsePost = function (doc, route) {
@@ -35,7 +36,7 @@ export const successResponsePost = function (doc, route) {
   var data = {
     code: SuccessCode,
     success: true,
-    message: message,
+    UserMessage: message,
     data: doc,
   };
   return data;
@@ -45,7 +46,7 @@ export const successRegister = function (doc) {
   var data = {
     code: SuccessCode,
     success: true,
-    message: SuccessRegister,
+    UserMessage: SuccessRegister,
     data: doc,
   };
   return data;
@@ -55,7 +56,7 @@ export const successToken = function (token) {
   var data = {
     code: SuccessCode,
     success: true,
-    message: SuccessLogin,
+    UserMessage: SuccessLogin,
     data: {},
     token: token,
   };
@@ -66,12 +67,21 @@ export const notFoundResponse = function () {
   var data = {
     code: NotFoundCode,
     success: false,
-    message: NotFoundMsg,
+    UserMessage: NotFoundMsg,
     data: {},
   };
   return data;
 };
 export const userValidationResponse = function (issue) {
+  var data = {
+    code: BadRequestCode,
+    success: false,
+    message: "Bad Request",
+    UserMessage: issue,
+  };
+  return data;
+};
+export const tokenNotProvided = function (issue) {
   var data = {
     code: BadRequestCode,
     success: false,
@@ -98,11 +108,27 @@ export const errorResponse = function (res) {
   };
   return res.status(500).json(data);
 };
+export const userErrorRegister = (msg) => {
+  var data = {
+    code: 400,
+    success: false,
+    UserMessage: msg,
+  };
+  return data;
+};
+export const errorProductNotFound = function (res) {
+  var data = {
+    code: GenericErrorCode,
+    success: false,
+    UserMessage: ValidProdId,
+  };
+  return res.status(500).json(data);
+};
 export const apiErrorResponse = function (res, msg) {
   var data = {
     code: GenericErrorCode,
     success: false,
-    message: msg,
+    UserMessage: msg,
   };
   return res.status(500).json(data);
 };

@@ -11,8 +11,8 @@ const productSchema = mongoose.Schema({
 export function validateProd(data) {
   const schema = Joi.object({
     productName: Joi.string().min(3).max(20).required(),
-    productType: Joi.number().max(1).required(),
-    price: Joi.number().min(50).required(),
+    productType: Joi.number().required(),
+    price: Joi.number().min(2).required(),
     quantity: Joi.number().required(),
     image: Joi.string(),
   });
@@ -23,8 +23,8 @@ export function validateProd(data) {
 export function validateProdUpdate(data) {
   const schema = Joi.object({
     productName: Joi.string().min(3).max(20),
-    productType: Joi.number().max(1),
-    price: Joi.number().min(50),
+    productType: Joi.number(),
+    price: Joi.number().min(1),
     quantity: Joi.number(),
     image: Joi.string(),
   });

@@ -20,6 +20,7 @@ export const SuccessRegister = "User successfully registered!";
 
 export const NotFoundMsg = "Data not found";
 export const OrderErrorMsg = "Out of Stock";
+export const ValidProdId = "Enter valid Product Id";
 export const UserErrorMsg = "User Does not exist";
 export const UnauthorizedErrorMsg = "Unauthorized Request";
 export const ForbiddenErrorMsg = "Forbidden Request";

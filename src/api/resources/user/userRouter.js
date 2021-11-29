@@ -9,6 +9,7 @@ import {
   successToken,
   unauthorizedResponse,
   userValidationResponse,
+  userErrorRegister,
 } from "../../modules/apiResponses.js";
 import { auth } from "../../modules/auth.js";
 import { admin } from "../../modules/admin.js";
@@ -24,16 +25,23 @@ userRouter.route("/").get(auth, admin, userController.getAll);
 userRouter.post("/register", async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
-    if (user) return res.status(400).send("user already exists");
+    if (user)
+      return res.status(400).send(userErrorRegister("user already exists"));
     let { error } = validateUserSignUp(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error)
+      return res.status(400).send(userErrorRegister(error.details[0].message));
     user = new User(req.body);
     await user.generateHashedPassword();
     await user.save();
+    let token = jwt.sign(
+      { _id: user._id, name: user.name, role: user.role, email: user.email },
+      "process.env.JWT_SECRET"
+    );
     let doc = _.pick(user, ["name", "email"]);
     return res.send(successRegister(doc));
   } catch (error) {
     console.log(error);
+    res.send(error);
   }
 });
 
@@ -48,8 +56,8 @@ userRouter.post("/login", validateUserLogin, async (req, res) => {
     let isValid = await bcrypt.compare(req.body.password, user.password);
     if (!isValid) return res.status(401).send(unauthorizedResponse("password"));
     let token = jwt.sign(
-      { _id: user._id, name: user.name },
-      process.env.JWT_SECRET
+      { _id: user._id, name: user.name, role: user.role, email: user.email },
+      "process.env.JWT_SECRET"
     );
     res.send(successToken(token));
   } catch (error) {
@@ -59,5 +67,5 @@ userRouter.post("/login", validateUserLogin, async (req, res) => {
 userRouter
   .route("/:id")
   .get(auth, admin, userController.getOne)
-  .put(auth, validateUserUpdate, userController.updateOne)
+  .put(validateUserUpdate, userController.updateOne)
   .delete(auth, admin, userController.deleteOne);

@@ -29,7 +29,7 @@ export function validateUserSignUp(data) {
     email: Joi.string().email().min(10).required(),
     password: Joi.string().min(5).required(),
     contact: Joi.string().length(14).regex(/^\d+$/),
-    role: Joi.number().required(),
+    role: Joi.number(),
   });
   return schema.validate(data, { abortEarly: false });
 }
@@ -46,7 +46,8 @@ export function validateUserUpdateSchema(data) {
   const schema = Joi.object({
     name: Joi.string().min(3).max(20),
     password: Joi.string().min(5),
-    contact: Joi.string().length(14).regex(/^\d+$/),
+    contact: Joi.string().length(11).regex(/^\d+$/),
+    role: Joi.number(),
   });
   return schema.validate(data, { abortEarly: false });
 }

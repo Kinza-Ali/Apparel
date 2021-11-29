@@ -1,4 +1,4 @@
 {
-    "db": "mongodb://localhost/api",
+    "db": "mongodb+srv://Kinza-ali:adminadmin123@cluster0.cedut.mongodb.net/Kinza-ali?retryWrites=true&w=majority",
     "jwtPrivateKey": "somePrivateKey"
   }
