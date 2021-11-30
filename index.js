@@ -33,7 +33,7 @@ app.use("/api", router);
 
 // connecting mongoose....
 mongoose
-  .connect(config.get("db"), {
+  .connect(process.env.DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
