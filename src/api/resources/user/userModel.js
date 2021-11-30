@@ -28,7 +28,7 @@ export function validateUserSignUp(data) {
     name: Joi.string().min(3).max(20).required(),
     email: Joi.string().email().min(10).required(),
     password: Joi.string().min(5).required(),
-    contact: Joi.string().length(14).regex(/^\d+$/),
+    contact: Joi.string().length(11).regex(/^\d+$/),
     role: Joi.number(),
   });
   return schema.validate(data, { abortEarly: false });
