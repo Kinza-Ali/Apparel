@@ -39,6 +39,6 @@ mongoose
   })
   .then(() => console.log("Connected to Mongo .... "))
   .catch((error) => console.log(error.message));
-app.listen(62500, () => {
+app.listen(process.env.PORT || 61500, () => {
   console.log("connected to server");
 });
